@@ -3,6 +3,10 @@
 {{define "title"}}Profie - {{.User.Username}}{{end}} 
 
 {{define "main"}} 
+
+<!-- FIlter by likes -->
+<a href="/profile/liked?user={{.User.Username}}" type="button" class="btn btn-primary">Liked posts</a>
+
 <h2>{{.User.Username}}'s posts</h2>
 
 {{if .Posts}} 

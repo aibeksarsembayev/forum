@@ -16,6 +16,7 @@ func (app *application) routes() *http.ServeMux {
 	mux.HandleFunc("/post/comment/like", app.likeComment)
 	mux.HandleFunc("/post/comment/dislike", app.dislikeComment)
 	mux.HandleFunc("/profile", app.showProfile)
+	mux.HandleFunc("/profile/liked", app.showLikedPosts)
 	mux.HandleFunc("/category", app.showPostByCategory)
 
 	fileServer := http.FileServer(http.Dir("./ui/static"))
