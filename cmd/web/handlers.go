@@ -220,14 +220,7 @@ func (app *application) showPost(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) createPost(w http.ResponseWriter, r *http.Request) {
 
-	// if r.Method != http.MethodPost {
-	// 	w.Header().Set("Allow", http.MethodPost)
-	// 	app.clientError(w, http.StatusMethodNotAllowed)
-	// 	return
-	// }
-
 	username, IsSession := session.Get(r)
-	fmt.Println(username, IsSession)
 	if !IsSession {
 		http.Redirect(w, r, "/signin", http.StatusSeeOther)
 		return
@@ -516,4 +509,50 @@ func (app *application) dislikeComment(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, path, http.StatusFound)
 	}
 
+}
+
+func (app *application) showProfile(w http.ResponseWriter, r *http.Request) {
+	username := r.URL.Query().Get("user")
+
+	u, err := app.posts.GetUser(username)
+	if err != nil {
+		if errors.Is(err, models.ErrNoRecord) {
+			app.notFound(w)
+		} else {
+			app.serverError(w, err)
+		}
+		return
+	}
+
+	id := u.UserID
+
+	p, err := app.posts.GetPostsByID(id)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	// Count votes for post by range
+	for _, post := range *p {
+		likes, err := app.posts.CountVotes(post.PostID, true)
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
+		dislikes, err := app.posts.CountVotes(post.PostID, false)
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
+		post.Votes.Likes = uint(likes)
+		post.Votes.Dislikes = uint(dislikes)
+	}
+
+	_, IsSession := session.Get(r)
+
+	app.render(w, r, "profile.page.html", &templateData{
+		Posts:     *p,
+		User:      *u,
+		IsSession: IsSession,
+	})
 }

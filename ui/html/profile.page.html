@@ -1,9 +1,12 @@
-{{template "base" .}} {{define "title"}}Home Page{{end}} {{define "main"}}
+{{template "base" .}} 
 
+{{define "title"}}Profie - {{.User.Username}}{{end}} 
 
-<h2>The Last posts</h2>
+{{define "main"}} 
+<h2>{{.User.Username}}'s posts</h2>
 
-{{if .Posts}} {{range .Posts}}
+{{if .Posts}} 
+{{range .Posts}} 
 <div class="card mb-3" style="max-width: 540px">
   <div class="row g-0">
     <div class="col-md-4">
@@ -44,6 +47,10 @@
     </div>
   </div>
 </div>
-{{end}} {{else}}
-<p>Nothing is here..for now!</p>
-{{end}} {{end}}
+{{end}}
+
+{{else}}
+<p>No posts by {{.Username}}.. for now!</p>
+{{end}}
+
+{{end}}
