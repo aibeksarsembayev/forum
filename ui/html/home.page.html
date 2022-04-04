@@ -1,0 +1,49 @@
+{{template "base" .}} {{define "title"}}Home Page{{end}} {{define "main"}}
+
+
+<h2>The Last posts</h2>
+
+{{if .Posts}} {{range .Posts}}
+<div class="card mb-3" style="max-width: 540px">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img
+        src="http://www.eurostrada.net/wp-content/uploads/2015/04/Image-Coming-Soon1.png"
+        class="img-fluid rounded-start"
+        alt="..."
+      />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{.Title}}</h5>
+        <p class="card-text">{{.Content}}</p>
+
+        <p class="card-text">
+          <small class="text-muted">Author: {{.Username}}</small>
+        </p>
+
+        <a href="/post?id={{.PostID}}">{{.Title}}</a>
+
+        <p class="card-text">Published: {{.Created}}</p>
+        <div>
+          {{.Votes.Likes}}
+          <form action="/post/like?id={{.PostID}}" method="Post">  
+            <input type="text" value="/" name="path" hidden>               
+            <input type="submit" value="Like" />            
+          </form>                             
+        </div>
+        <div>
+          {{.Votes.Dislikes}}
+          <form action="/post/dislike?id={{.PostID}}" method="Post">                 
+            <input type="text" value="/" name="path" hidden> 
+            <input type="submit" value="Dislike" />
+          </form>          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{{end}} {{else}}
+<p>Nothing is here..for now!</p>
+{{end}} {{end}}

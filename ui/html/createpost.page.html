@@ -1,0 +1,24 @@
+{{template "base" .}}
+
+{{define "title"}}Create Post{{end}}
+
+{{define "main"}}
+    <h2>Create Post</h2>
+
+    <form action="/post/create" method="Post">
+
+        <label>Title <input type="text" name="title" placeholder="Enter title" required></label>
+        <label>Content <input type="text" name="content" placeholder="Enter content" required></label>
+
+        <label for="category">Category</label>   
+        <select name="category" id="category">
+            {{range .Categories}}
+            <option value="{{.CategoryName}}">{{.CategoryName}}</option>
+            {{end}}
+        </select>     
+    
+        <input type="submit" value="Post">
+
+    </form>
+
+{{end}}

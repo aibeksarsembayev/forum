@@ -1,0 +1,88 @@
+{{template "base" .}} {{define "title"}}Post #{{.Post.PostID}}{{end}} {{define
+"main"}} {{with .Post}}
+<div class="snippet">
+  <img
+    src="http://www.eurostrada.net/wp-content/uploads/2015/04/Image-Coming-Soon1.png"
+    class="img-fluid rounded-start"
+    alt="..."
+  />
+  <div class="metadata">
+    <strong>{{.Title}}</strong>
+    <span>#{{.PostID}}</span>
+  </div>
+  <pre><code>{{.Content}}</code></pre>
+  <div class="metadata">
+    <div>Category: {{.CategoryName}}</div>
+    <div>Author: {{.Username}}</div>
+    <p class="card-text">Published: {{.Created}}</p>
+    <div>
+      {{.Votes.Likes}}
+      <form action="/post/like?id={{.PostID}}" method="Post"> 
+        <input type="text" value="/post?id={{.PostID}}" name="path" hidden>                 
+        <input type="submit" value="Like" />
+      </form>                             
+    </div>
+    <div>
+      {{.Votes.Dislikes}}
+      <form action="/post/dislike?id={{.PostID}}" method="Post">
+        <input type="text" value="/post?id={{.PostID}}" name="path" hidden>                  
+        <input type="submit" value="Dislike" />
+      </form>          
+    </div>
+  </div>
+</div>
+{{end}}
+<br />
+<div>
+  <div>
+    <strong>{{.CommentNumber}} 
+        {{if eq .CommentNumber "1"}} 
+            comment 
+        {{else}} comments{{end}}</strong>
+  </div>
+  <div>
+    {{if .IsSession}}
+    <form action="/comment/create?id={{.Post.PostID}}" method="Post">
+      <label>
+        <input
+          type="textarea"
+          name="comment"
+          placeholder="Leave a comment..."
+          required
+      />
+
+      <input type="submit" value="Send" />
+    </form>
+
+    {{else}}
+    <p>To leave a comment -> <a href="/signin">Sign In</a></p>
+
+    {{end}}
+  </div>
+
+  <div>
+    {{if .Comments}} {{range .Comments}}
+    <p>Comment author: {{.Username}}</p>
+    <p>Comment: {{.CommentBody}}</p>
+    <p>Comment date: {{.Created}}</p>
+    <br>
+    <div>
+      {{.Votes.Likes}}
+      <form action="/post/comment/like?id={{.PostID}}&comment={{.CommentID}}" method="Post"> 
+        <input type="text" value="/post?id={{.PostID}}" name="path" hidden>                 
+        <input type="submit" value="Like" />
+      </form>                             
+    </div>
+    <div>
+      {{.Votes.Dislikes}}
+      <form action="/post/comment/dislike?id={{.PostID}}&comment={{.CommentID}}" method="Post">
+        <input type="text" value="/post?id={{.PostID}}" name="path" hidden>                  
+        <input type="submit" value="Dislike" />
+      </form>          
+    </div>
+    {{end}} {{else}}
+    <p>No comments yet... Be first - leave your thought!</p>
+    {{end}}
+  </div>
+</div>
+{{end}}

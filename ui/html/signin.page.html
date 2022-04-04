@@ -1,0 +1,16 @@
+{{template "base" .}}
+
+{{define "title"}}Sign In{{end}}
+
+{{define "main"}}
+    <h2>Login</h2>
+
+    <form action="/signin" method="Post">
+
+        <label>Username <input type="text" name="username" placeholder="Enter your name" required></label>
+        <label>Password <input type="password" name="password" placeholder="Enter your password" required></label>
+        <input type="submit" value="Login">
+
+    </form>
+
+{{end}}
