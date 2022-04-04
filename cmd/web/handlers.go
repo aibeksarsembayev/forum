@@ -463,7 +463,7 @@ func (app *application) likeComment(w http.ResponseWriter, r *http.Request) {
 		}
 		path := r.FormValue("path")
 
-		http.Redirect(w, r, path, http.StatusNotFound)
+		http.Redirect(w, r, path, http.StatusFound)
 	}
 
 }
