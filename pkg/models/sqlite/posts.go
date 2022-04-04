@@ -397,11 +397,11 @@ func (m *ForumModel) CreateVoteComment(post_id, user_id, comment_id int, vote bo
 	}
 
 	if v.Value == vote {
-		err = m.DeleteVote(v.ID)
+		err = m.DeleteVoteComment(v.ID)
 		return 0, err
 	}
 
-	err = m.UpdateVote(v.ID, vote)
+	err = m.UpdateVoteComment(v.ID, vote)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {

@@ -469,9 +469,51 @@ func (app *application) likeComment(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) dislikeComment(w http.ResponseWriter, r *http.Request) {
-	// username, IsSession := session.Get(r)
-	// if !IsSession {
-	// 	http.Redirect(w, r, "/signin", http.StatusSeeOther)
-	// }
+	username, IsSession := session.Get(r)
+	if !IsSession {
+		http.Redirect(w, r, "/signin", http.StatusSeeOther)
+	}
+
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil || id < 1 {
+		app.notFound(w)
+		return
+	}
+
+	comment_id, err := strconv.Atoi(r.URL.Query().Get("comment"))
+	if err != nil || comment_id < 1 {
+		app.notFound(w)
+		return
+	}
+
+	//get user model
+	user, err := app.posts.GetUser(username)
+	if err != nil {
+		app.badRequest(w)
+		return
+	}
+
+	if r.Method != "POST" {
+		w.Header().Set("Allow", http.MethodPost)
+		app.clientError(w, http.StatusMethodNotAllowed)
+		return
+	} else {
+		voteComment := models.VoteComment{
+			UserID:    user.UserID,
+			PostID:    id,
+			CommentID: comment_id,
+			Value:     false,
+		}
+
+		_, err := app.posts.CreateVoteComment(voteComment.PostID, voteComment.UserID, voteComment.CommentID, voteComment.Value)
+
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
+		path := r.FormValue("path")
+
+		http.Redirect(w, r, path, http.StatusFound)
+	}
 
 }
