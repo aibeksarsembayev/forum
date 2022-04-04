@@ -1,13 +1,9 @@
-{{template "base" .}} {{define "title"}}Home Page{{end}} {{define "main"}}
+{{template "base" .}} 
 
-<!-- <div class="container">
-  {{range .Categories}}
-  <button type="button" class="btn btn-secondary">{{.CategoryName}}</button>
-  {{end}}
-</div> -->
+{{define "title"}}Posts of {{.Category.CategoryName}}{{end}} 
 
+{{define "main"}} 
 
- 
 <!-- Category filter -->
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filter by Category</button>
 
@@ -31,8 +27,10 @@
   </div>
 </div>
 
-<h2>The Last posts</h2>
-{{if .Posts}} {{range .Posts}}
+<h2>{{.Category.CategoryName}} Posts</h2>
+
+{{if .Posts}} 
+{{range .Posts}} 
 <div class="card mb-3" style="max-width: 540px">
   <div class="row g-0">
     <div class="col-md-4">
@@ -73,6 +71,10 @@
     </div>
   </div>
 </div>
-{{end}} {{else}}
-<p>Nothing is here..for now!</p>
-{{end}} {{end}}
+{{end}}
+
+{{else}}
+<p>No {{.Category.CategoryName}} category posts.. for now!</p>
+{{end}}
+
+{{end}}

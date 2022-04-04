@@ -1,8 +1,14 @@
 {{define "aside"}}
 <aside >
-  <div class="container">
-   Here will be sidebar...  
-   
+
+  
+
+
+
+  <div >
+    {{range .Categories}}
+    <button type="button" class="btn btn-secondary">{{.CategoryName}}</button>
+    {{end}}
   </div>
 </aside>
 {{end}}

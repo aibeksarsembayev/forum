@@ -504,3 +504,45 @@ func (m *ForumModel) GetPostsByID(id int) (*[]models.Post, error) {
 	}
 	return &posts, nil
 }
+
+func (m *ForumModel) GetPostbyCat(category_name string) (*[]models.Post, error) {
+	stmt, _ := m.DB.Prepare("SELECT post_id, title, content, user_id, category_name, created FROM posts WHERE category_name = ? ORDER BY post_id DESC")
+	rows, err := stmt.Query(category_name)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var posts []models.Post
+
+	for rows.Next() {
+		s := &models.Post{}
+
+		// time layout format
+		dateString := "2006-01-02 15:04:05 -0700 MST"
+		var timeTemp string
+
+		err = rows.Scan(&s.PostID, &s.Title, &s.Content, &s.UserID, &s.CategoryName, &timeTemp)
+		s.Created, _ = time.Parse(dateString, timeTemp)
+
+		// get username
+		user, err := m.GetUserByID(s.UserID)
+		if err != nil {
+			return nil, err
+		}
+		s.Username = user.Username
+
+		// temp Votes values
+		v := &models.VoteCount{Likes: 0, Dislikes: 0}
+		s.Votes = v
+
+		posts = append(posts, *s)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return &posts, nil
+}

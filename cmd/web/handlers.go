@@ -26,6 +26,12 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	c, err := app.posts.AllCategory()
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
 	// Count votes for post by range
 	for _, post := range *p {
 		likes, err := app.posts.CountVotes(post.PostID, true)
@@ -46,9 +52,10 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
 	// render page
 	app.render(w, r, "home.page.html", &templateData{
-		Posts:     *p,
-		User:      models.User{Username: username},
-		IsSession: IsSession,
+		Posts:      *p,
+		User:       models.User{Username: username},
+		IsSession:  IsSession,
+		Categories: *c,
 	})
 }
 
@@ -554,5 +561,48 @@ func (app *application) showProfile(w http.ResponseWriter, r *http.Request) {
 		Posts:     *p,
 		User:      *u,
 		IsSession: IsSession,
+	})
+}
+
+func (app *application) showPostByCategory(w http.ResponseWriter, r *http.Request) {
+
+	category := r.URL.Query().Get("category")
+
+	p, err := app.posts.GetPostbyCat(category)
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	c, err := app.posts.AllCategory()
+	if err != nil {
+		app.serverError(w, err)
+		return
+	}
+
+	// Count votes for post by range
+	for _, post := range *p {
+		likes, err := app.posts.CountVotes(post.PostID, true)
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
+		dislikes, err := app.posts.CountVotes(post.PostID, false)
+		if err != nil {
+			app.serverError(w, err)
+			return
+		}
+		post.Votes.Likes = uint(likes)
+		post.Votes.Dislikes = uint(dislikes)
+	}
+
+	username, IsSession := session.Get(r)
+
+	app.render(w, r, "category.page.html", &templateData{
+		Posts:      *p,
+		User:       models.User{Username: username},
+		IsSession:  IsSession,
+		Categories: *c,
+		Category:   models.Category{CategoryName: category},
 	})
 }
