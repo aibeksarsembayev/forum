@@ -1,9 +1,13 @@
 .PHONY: build
-
 build:
 	go build -v ./cmd/web
 
-.DEFAULT_GOAL := build
+.PHONY: run
 
 run:
-	docker run --name forumapp -p 5050:4000 forum 
+	docker run -p 3000:4000 -v forum:/app --rm --name forum forum:volumes
+
+stop:
+	docker stop forum	
+	
+.DEFAULT_GOAL := build
