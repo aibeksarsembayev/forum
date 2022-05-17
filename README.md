@@ -1,2 +1,2 @@
 # forum
-my first forum without addiotional external packages except bcrypt and sqlite3
+my first forum without additional external packages except bcrypt and sqlite3
