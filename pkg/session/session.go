@@ -2,6 +2,7 @@ package session
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"sync"
 )
@@ -9,6 +10,16 @@ import (
 var sessions sync.Map
 
 func Set(username, sessionToken string) {
+
+	// check for existing the same user session
+	sessions.Range(func(key, value interface{}) bool {
+		log.Println("sessions: ", key, value)
+		if username == value {
+			sessions.Delete(key)
+		}
+		return true
+	})
+
 	sessions.Store(sessionToken, username)
 }
 
