@@ -260,6 +260,18 @@ func (app *application) createPost(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		//check for wrong category entry
+		categoryChecker := 0
+		for _, category := range *c {
+			if category.CategoryName == r.FormValue("category") {
+				categoryChecker = 1
+			}
+		}
+		if categoryChecker == 0 {
+			app.badRequest(w)
+			return
+		}
+
 		post := models.Post{
 			Title:        r.FormValue("title"),
 			Content:      r.FormValue("content"),
