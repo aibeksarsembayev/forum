@@ -311,6 +311,12 @@ func (app *application) createComment(w http.ResponseWriter, r *http.Request) {
 		return
 	} else if r.Method == "POST" {
 
+		// check for empty entry for comment
+		if strings.TrimSpace(r.FormValue("comment")) == "" {
+			app.badRequest(w)
+			return
+		}
+
 		cmnt := models.Comment{
 			CommentBody: r.FormValue("comment"),
 			PostID:      id,
