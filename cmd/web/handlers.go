@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	"git.01.alem.school/quazar/forum/pkg/models"
@@ -253,6 +254,12 @@ func (app *application) createPost(w http.ResponseWriter, r *http.Request) {
 			IsSession:  IsSession,
 		})
 	} else if r.Method == "POST" {
+		// check for empty entry for title and/od content
+		if (strings.TrimSpace(r.FormValue("title")) == "") || (strings.TrimSpace(r.FormValue("content")) == "") {
+			app.badRequest(w)
+			return
+		}
+
 		post := models.Post{
 			Title:        r.FormValue("title"),
 			Content:      r.FormValue("content"),
