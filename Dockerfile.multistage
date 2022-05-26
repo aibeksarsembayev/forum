@@ -1,7 +1,28 @@
 # syntax=docker/dockerfile:1
 
 # build
-FROM golang:1.16
+FROM golang:1.16-buster AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN go build -o forum ./cmd/web
+
+# deploy
+FROM gcr.io/distroless/base-debian10
+
+WORKDIR /
+
+# COPY --from=build forum forum
+
+COPY --from=build /app .
+
+ENV PORT 3000
+
+EXPOSE $PORT
+
+ENTRYPOINT [ "./forum" ]
 
 # multistage option but missing some image (C?)
 

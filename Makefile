@@ -1,20 +1,16 @@
-.PHONY: build
 build:
-	go build -v ./cmd/web
+	docker build -t iforum  .
 
-.PHONY: run
+buildmulti:
+	docker build -t iforum:multistage -f Dockerfile.multistage .
+
 run:
-	./web
+	docker run -d -p 3000:4000 -v vforumdb:/app/data --rm --name cforum iforum
 
-.PHONY: dockerbuild
-dockerbuild:
-	docker build -t forum  .
-
-.PHONY: dockerrun
-dockerrun:
-	docker run -p 3000:4000 -v forum:/app --rm --name forum forum:volumes
+run-dev:
+	docker run -d -p 3000:4000 -v vforumdb:/app/data --rm --name cforum iforum
 
 stop:
-	docker stop forum	
+	docker stop cforum	
 	
 .DEFAULT_GOAL := build
