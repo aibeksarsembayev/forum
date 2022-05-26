@@ -21,7 +21,7 @@ type application struct {
 
 func main() {
 	addr := flag.String("addr", ":4000", "Network addess of HTTP")
-	dsn := flag.String("dsn", "./forum.db", "SQLite DB source name")
+	dsn := flag.String("dsn", "./data/forum.db", "SQLite DB source name")
 	flag.Parse()
 
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
