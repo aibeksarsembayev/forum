@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	"git.01.alem.school/quazar/forum/pkg/models"
 	"git.01.alem.school/quazar/forum/pkg/models/sqlite"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -31,8 +32,11 @@ func main() {
 	if err != nil {
 		errorLog.Fatal(err)
 	}
-
 	defer db.Close()
+
+	if err := models.Setup(db); err != nil {
+		errorLog.Fatal(err)
+	}
 
 	templateCache, err := newTemplateCache("./ui/html/")
 	if err != nil {

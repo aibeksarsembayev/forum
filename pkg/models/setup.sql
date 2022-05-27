@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS "posts" (
 	"user_id"	INTEGER NOT NULL,
 	"category_name"	TEXT NOT NULL,
 	"created"	TEXT NOT NULL,
-	FOREIGN KEY("category_name") REFERENCES "category"("category_name") ON UPDATE NO ACTION,
+	FOREIGN KEY("category_name") REFERENCES "category"("category_name") ON DELETE NO ACTION,
 	FOREIGN KEY("user_id") REFERENCES "users"("user_id"),
 	PRIMARY KEY("post_id" AUTOINCREMENT)
 );
@@ -45,3 +45,16 @@ CREATE TABLE IF NOT EXISTS "votes" (
 	FOREIGN KEY("post_id") REFERENCES "posts"("post_id"),
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
+
+CREATE TABLE "vote_comment" (
+	"id"	INTEGER NOT NULL,
+	"user_id"	INTEGER NOT NULL,
+	"post_id"	INTEGER NOT NULL,
+	"comment_id"	INTEGER NOT NULL,
+	"value"	BLOB NOT NULL,
+	FOREIGN KEY("user_id") REFERENCES "users"("user_id") ON UPDATE NO ACTION,
+	FOREIGN KEY("post_id") REFERENCES "posts"("post_id") ON UPDATE NO ACTION,
+	FOREIGN KEY("comment_id") REFERENCES "comments"("comment_id") ON UPDATE NO ACTION,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+
