@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu May 26 19:54:28 2022
+# Make data base, printed on Fri May 27 10:23:28 2022
 
 # Variables
 
@@ -49,7 +49,7 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 # environment
 _ = /home/student/Applications/VSCode/usr/share/code/code
 # environment
-JOURNAL_STREAM = 8:39597
+JOURNAL_STREAM = 8:1817953
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -73,7 +73,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1488
+MANAGERPID = 655544
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -91,7 +91,7 @@ GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
 GJS_DEBUG_OUTPUT = stderr
 # environment
-SESSION_MANAGER = local/ALEM-a1d7c8:@/tmp/.ICE-unix/1692,unix/ALEM-a1d7c8:/tmp/.ICE-unix/1692
+SESSION_MANAGER = local/ALEM-316eca:@/tmp/.ICE-unix/655763,unix/ALEM-316eca:/tmp/.ICE-unix/655763
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -103,7 +103,7 @@ VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = fe9731d8a6bb482aa782bbae475fec95
+INVOCATION_ID = 73e1b8674e144bd6b1d5b32b40ddff34
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -113,7 +113,7 @@ XDG_SESSION_DESKTOP = ubuntu
 # environment
 SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 44156
+GIO_LAUNCHED_DESKTOP_FILE_PID = 656088
 # automatic
 %F = $(notdir $%)
 # environment
@@ -125,7 +125,7 @@ PWD = /home/student/Documents/github/forum
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1654
+SSH_AGENT_PID = 655725
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -163,7 +163,7 @@ SHLVL = 0
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-1515fec9-30f9-4afe-8405-856fd6b83bd8.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-d09d1c13-c97a-4069-a292-ba13a9b049f8.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -172,7 +172,7 @@ USER = student
 LS_OPTIONS = --color=auto
 # environment
 LC_MONETARY = kk_KZ.UTF-8
-# makefile (from 'Makefile', line 20)
+# makefile (from 'Makefile', line 16)
 .DEFAULT_GOAL := build
 # environment
 XDG_CURRENT_DESKTOP = Unity
@@ -233,7 +233,7 @@ LC_ADDRESS = kk_KZ.UTF-8
 # environment
 LANG = C
 # environment
-VSCODE_PID = 44156
+VSCODE_PID = 656088
 # variable set hash-table stats:
 # Load=111/1024=11%, Rehash=0, Collisions=19/137=14%
 
@@ -243,9 +243,9 @@ VSCODE_PID = 44156
 
 # Directories
 
-# . (device 62, inode 33657): 15 files, no impossibilities.
+# . (device 62, inode 115): 16 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -257,8 +257,8 @@ stop:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 18):
-	docker stop forum	
+#  recipe to execute (from 'Makefile', line 14):
+	docker stop cforum	
 	
 
 # Not a target:
@@ -268,34 +268,26 @@ all:
 #  File does not exist.
 #  File has not been updated.
 
-.PHONY: build run dockerbuild dockerrun
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-26 17:18:33.241891956
+#  Last modified 2022-05-26 19:54:57.516150704
 #  File has been updated.
 #  Successfully updated.
 
 build:
-#  Phony target (prerequisite of .PHONY).
- 
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 3):
-	go build -v ./cmd/web
+#  recipe to execute (from 'Makefile', line 2):
+	docker build -t iforum  .
 
-dockerbuild:
-#  Phony target (prerequisite of .PHONY).
+buildmulti:
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 11):
-	docker build -t forum  .
+#  recipe to execute (from 'Makefile', line 5):
+	docker build -t iforum:multistage -f Dockerfile.multistage .
 
 # Not a target:
 .DEFAULT:
@@ -304,35 +296,34 @@ dockerbuild:
 #  File has not been updated.
 
 run:
-#  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 7):
-	./web
+#  recipe to execute (from 'Makefile', line 8):
+	docker run -d -p 3000:4000 -v vforumdb:/app/data --rm --name cforum iforum
 
-dockerrun:
-#  Phony target (prerequisite of .PHONY).
+ 
+run-dev:
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 15):
-	docker run -p 3000:4000 -v forum:/app --rm --name forum forum:volumes
+#  recipe to execute (from 'Makefile', line 11):
+	docker run -d -p 3000:4000 -v vforumdb:/app/data --rm --name cforum iforum
 
 # files hash-table stats:
-# Load=10/1024=1%, Rehash=0, Collisions=0/31=0%
+# Load=9/1024=1%, Rehash=0, Collisions=0/19=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 26 / storage = 216 B / avg = 8 B
-# current buf: size = 8162 B / used = 216 B / count = 26 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 26 / storage = 211 B / avg = 8 B
+# current buf: size = 8162 B / used = 211 B / count = 26 / avg = 8 B
 
-# strcache performance: lookups = 46 / hit rate = 43%
+# strcache performance: lookups = 35 / hit rate = 25%
 # hash-table stats:
-# Load=26/8192=0%, Rehash=0, Collisions=1/46=2%
-# Finished Make data base on Thu May 26 19:54:28 2022
+# Load=26/8192=0%, Rehash=0, Collisions=1/35=3%
+# Finished Make data base on Fri May 27 10:23:28 2022
 
  
