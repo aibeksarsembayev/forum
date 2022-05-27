@@ -38,6 +38,10 @@ func main() {
 		errorLog.Fatal(err)
 	}
 
+	if err := models.InitCategory(db); err != nil {
+		errorLog.Fatal(err)
+	}
+
 	templateCache, err := newTemplateCache("./ui/html/")
 	if err != nil {
 		errorLog.Fatal(err)

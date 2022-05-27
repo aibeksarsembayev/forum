@@ -25,3 +25,24 @@ func Setup(db *sql.DB) error {
 	}
 	return nil
 }
+
+func InitCategory(db *sql.DB) error {
+
+	path := filepath.Join("pkg", "models", "setupCat.sql")
+
+	file, err := ioutil.ReadFile(path)
+	if err != nil {
+		return err
+	}
+
+	requests := strings.Split(string(file), ";")
+
+	for _, request := range requests {
+		_, err := db.Exec(request)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+
+}

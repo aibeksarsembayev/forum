@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS "votes" (
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 
-CREATE TABLE "vote_comment" (
+CREATE TABLE IF NOT EXISTS "vote_comment" (
 	"id"	INTEGER NOT NULL,
 	"user_id"	INTEGER NOT NULL,
 	"post_id"	INTEGER NOT NULL,
