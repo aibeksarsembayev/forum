@@ -7,6 +7,9 @@ buildmulti:
 run:
 	docker run -d -p 3000:4000 -v vforumdb:/app/data --rm --name cforum iforum
 
+runmulti:
+	docker run -d -p 3000:4000 -v vforumdb:/app/data --rm --name cforum iforum:multi
+
 run-dev:
 	docker run -d -p 3000:4000 -v vforumdb:/app/data --rm --name cforum iforum
 
